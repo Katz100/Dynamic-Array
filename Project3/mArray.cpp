@@ -101,6 +101,38 @@ void mArray<T>::unitTest()
 }
 
 template<typename T>
+T mArray<T>::partition(Tconst low, Tconst high)
+{
+	T pivot = array[low];
+	T left = low;
+
+	for (int i = low + 1; i < high; i++)
+	{
+		if (array[i] < pivot)
+		{
+			std::swap(array[i], array[left]);
+			left += 1;
+		}
+	}
+
+	std::swap(pivot, array[left]);
+
+	return left;
+}
+
+template<typename T>
+void mArray<T>::quicksort(Tconst low, Tconst high)
+{
+	if (low < high)
+	{
+		int pivot_location = partition(low, high);
+		quicksort(low, pivot_location);
+		quicksort(pivot_location + 1, high);
+	}
+}
+
+
+template<typename T>
 std::ostream& operator<<(std::ostream& ostr, const mArray<T>& m)
 {
 	for (int i = 0; i < m.get_size(); i++)

@@ -12,10 +12,13 @@ template<typename T>
 class mArray
 {
 private:
+	
+
 	int size;
 	int max_size;
 	T* array;
 public:
+	using Tconst = const T&;
 	mArray(int size);
 	mArray();
 	~mArray();
@@ -28,6 +31,8 @@ public:
 	
 	void add(T value);
 	void unitTest();
+	T partition(Tconst low, Tconst high);
+	void quicksort(Tconst low, Tconst high);
 };
 
 #include "mArray.cpp"
