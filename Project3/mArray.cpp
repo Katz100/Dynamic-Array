@@ -79,7 +79,7 @@ int mArray<T>::get_max_size() const
 template<typename T>
 T& mArray<T>::operator[](int index)
 {
-	assert(((index > -1) && (index < max_size)) && "Array index out of bounds");
+	assert(isOutOfBounds(index) && "Array index out of bounds");
 
 	return array[index];
 }
@@ -87,7 +87,7 @@ T& mArray<T>::operator[](int index)
 template<typename T>
 const T& mArray<T>::operator[](int index) const
 {
-	assert(((index > -1) && (index < max_size)) && "Array index out of bounds");
+	assert( isOutOfBounds(index) && "Array index out of bounds");
 
 	return array[index];
 }
@@ -153,6 +153,13 @@ constexpr void mArray<T>::quicksort(Tconst low, Tconst high)
 		quicksort(low, pivot_location);
 		quicksort(pivot_location + 1, high);
 	}
+}
+
+template<typename T>
+bool mArray<T>::isOutOfBounds(int index) const
+{
+	return (index > -1 && index < max_size) ? 1 : 0;
+	
 }
 
 

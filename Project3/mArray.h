@@ -33,6 +33,8 @@ public:
 	void unitTest();
 	constexpr T partition(Tconst low, Tconst high);
 	constexpr void quicksort(Tconst low, Tconst high);
+
+	bool isOutOfBounds(int index) const;
 };
 
 #include "mArray.cpp"
