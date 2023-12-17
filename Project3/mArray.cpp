@@ -15,6 +15,23 @@ mArray<T>::mArray() : size(0), max_size(2), array(new T [max_size])
 }
 
 template<typename T>
+mArray<T>::mArray(const mArray& other)
+{
+	delete[] array;
+	size = other.size;
+	max_size = other.max_size;
+
+	T* temp_array = new T[max_size];
+
+	for (int i = 0; i < size; i++)
+	{
+		temp_array[i] = other.array[i];
+	}
+
+	array = temp_array;
+}
+
+template<typename T>
 mArray<T>::~mArray()
 {
 	delete[] array;
@@ -25,7 +42,7 @@ mArray<T>::~mArray()
 
 
 template<typename T>
-void mArray<T>::add(T value)
+constexpr void mArray<T>::add(T value)
 {
 	if (size >= max_size)
 	{
@@ -84,24 +101,31 @@ void mArray<T>::unitTest()
 	assert((TestArray.size == 0) && ("Constructer failure"));
 	assert((TestArray.max_size == 2) && ("Constructer failure"));
 	assert(TestArray.array && "Constructer failure");
-	cout << "Constructer succesful" << endl;
+	std::cout << "Constructer succesful" << std::endl;
 
-	TestArray.add(1);
 	TestArray.add(5);
-	TestArray.add(10);
+	TestArray.add(3);
+	TestArray.add(2);
 
-	assert(TestArray.array[0] == 1 && TestArray.array[1] == 5 && TestArray.array[2] == 10 && "Add method failure");
+	assert(TestArray[0] == 5 && TestArray[1] == 3 && TestArray[2] == 2 && "Add method failure");
 
 	assert(TestArray.size == 3 && "Unexpected size occured");
 
-	cout << "Add() method succesful" << endl;
+	std::cout << "Add() method succesful" << std::endl;
 
+	TestArray.quicksort(0, TestArray.get_size());
+
+	assert(TestArray[0] == 2 && TestArray[1] == 3 && TestArray[2] == 5 && "quicksort failure");
+	std::cout << "Quicksort() method succesful" << std::endl;
 	
-	
+	mArray<int> newTestArray = TestArray;
+
+	assert(newTestArray[0] == 2 && newTestArray[1] == 3 && TestArray[2] == 5 && "Copy constructer failure");
+	std::cout << "Copy constructer succesful" << std::endl;
 }
 
 template<typename T>
-T mArray<T>::partition(Tconst low, Tconst high)
+constexpr T mArray<T>::partition(Tconst low, Tconst high)
 {
 	T pivot = array[low];
 	T left = low;
@@ -121,7 +145,7 @@ T mArray<T>::partition(Tconst low, Tconst high)
 }
 
 template<typename T>
-void mArray<T>::quicksort(Tconst low, Tconst high)
+constexpr void mArray<T>::quicksort(Tconst low, Tconst high)
 {
 	if (low < high)
 	{

@@ -16,10 +16,14 @@ int main()
 	s.add(3);
 	s.add(8);
 
-	cout << s;
-	cout << endl;
+	std::cout << s;
+	std::cout << std::endl;
 	s.quicksort(0, s.get_size());
 
-	cout << s;
+	std::cout << s;
+
+	mArray<int> f = s;
+	std::cout << std::endl;
+	std::cout << f;
 	return 0;
 }
