@@ -18,12 +18,12 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mArray.cpp">
+    <ClCompile Include="DyArray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mArray.h">
+    <ClInclude Include="DyArray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

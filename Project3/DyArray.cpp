@@ -1,21 +1,21 @@
-#include "mArray.h"
+#include "DyArray.h"
 
 
-#ifndef MARRAY_CPP
-#define MARRAY_CPP
+#ifndef DYARRAY_CPP
+#define DYARRAY_CPP
 
 template<typename T>
-mArray<T>::mArray(int size) : size(size), max_size(size * 2), array(new T [max_size])
+DyArray<T>::DyArray(int size) : size(size), max_size(size * 2), array(new T [max_size])
 {
 }
 
 template<typename T>
-mArray<T>::mArray() : size(0), max_size(2), array(new T [max_size])
+DyArray<T>::DyArray() : size(0), max_size(2), array(new T [max_size])
 {
 }
 
 template<typename T>
-mArray<T>::mArray(const mArray& other)
+DyArray<T>::DyArray(const DyArray& other)
 {
 	delete[] array;
 	size = other.size;
@@ -32,7 +32,7 @@ mArray<T>::mArray(const mArray& other)
 }
 
 template<typename T>
-mArray<T>::~mArray()
+DyArray<T>::~DyArray()
 {
 	delete[] array;
 }
@@ -42,7 +42,7 @@ mArray<T>::~mArray()
 
 
 template<typename T>
-constexpr void mArray<T>::add(T value)
+constexpr void DyArray<T>::add(T value)
 {
 	if (size >= max_size)
 	{
@@ -65,19 +65,40 @@ constexpr void mArray<T>::add(T value)
 }
 
 template<typename T>
-int mArray<T>::get_size() const
+ void DyArray<T>::remove(int index)
+{
+	assert(isOutOfBounds(index) && "index out of bounds");
+	
+	T* temp_array = new T[max_size];
+	for (int i = 0; i < index; i++)
+	{
+		temp_array[i] = array[i];
+	}
+
+	for (int i = index + 1; i < size; i++)
+	{
+		temp_array[i - 1] = array[i];
+	}
+	
+	delete[] array;
+	array = temp_array;
+	size--;
+}
+
+template<typename T>
+int DyArray<T>::get_size() const
 {
 	return size;
 }
 
 template<typename T>
-int mArray<T>::get_max_size() const
+int DyArray<T>::get_max_size() const
 {
 	return max_size;
 }
 
 template<typename T>
-T& mArray<T>::operator[](int index)
+T& DyArray<T>::operator[](int index)
 {
 	assert(isOutOfBounds(index) && "Array index out of bounds");
 
@@ -85,7 +106,7 @@ T& mArray<T>::operator[](int index)
 }
 
 template<typename T>
-const T& mArray<T>::operator[](int index) const
+const T& DyArray<T>::operator[](int index) const
 {
 	assert( isOutOfBounds(index) && "Array index out of bounds");
 
@@ -93,10 +114,10 @@ const T& mArray<T>::operator[](int index) const
 }
 
 template<typename T>
-void mArray<T>::unitTest()
+void DyArray<T>::unitTest()
 {
 	
-	mArray<int> TestArray;
+	DyArray<int> TestArray;
 
 	assert((TestArray.size == 0) && ("Constructer failure"));
 	assert((TestArray.max_size == 2) && ("Constructer failure"));
@@ -113,58 +134,67 @@ void mArray<T>::unitTest()
 
 	std::cout << "Add() method succesful" << std::endl;
 
-	TestArray.quicksort(0, TestArray.get_size());
-
-	assert(TestArray[0] == 2 && TestArray[1] == 3 && TestArray[2] == 5 && "quicksort failure");
-	std::cout << "Quicksort() method succesful" << std::endl;
 	
-	mArray<int> newTestArray = TestArray;
+	
+	DyArray<int> newTestArray = TestArray;
 
 	assert(newTestArray[0] == 2 && newTestArray[1] == 3 && TestArray[2] == 5 && "Copy constructer failure");
 	std::cout << "Copy constructer succesful" << std::endl;
 }
 
-template<typename T>
-constexpr T mArray<T>::partition(Tconst low, Tconst high)
-{
-	T pivot = array[low];
-	T left = low;
 
-	for (int i = low + 1; i < high; i++)
-	{
-		if (array[i] < pivot)
-		{
-			std::swap(array[i], array[left]);
-			left += 1;
-		}
-	}
 
-	std::swap(pivot, array[left]);
 
-	return left;
-}
 
 template<typename T>
-constexpr void mArray<T>::quicksort(Tconst low, Tconst high)
-{
-	if (low < high)
-	{
-		int pivot_location = partition(low, high);
-		quicksort(low, pivot_location);
-		quicksort(pivot_location + 1, high);
-	}
-}
-
-template<typename T>
-bool mArray<T>::isOutOfBounds(int index) const
+bool DyArray<T>::isOutOfBounds(int index) const
 {
 	return (index > -1 && index < max_size) ? 1 : 0;
 	
 }
 
+template<typename T>
+void DyArray<T>::write(const char* file_name)
+{
+	
+	std::ofstream write_file(file_name);
+	
+	if (!write_file)
+	{
+		std::cerr << file_name << " could not be opened for writing.\n";
+	}
+
+	for (int i = 0; i < size; i++)
+	{
+		write_file << array[i] << ' ';
+	}
+
+	write_file.close();
+}
 
 template<typename T>
-std::ostream& operator<<(std::ostream& ostr, const mArray<T>& m)
+void DyArray<T>::read(const char* file_name)
+{
+	std::ifstream read_file(file_name);
+
+	if (!read_file)
+	{
+		std::cerr << file_name << " could not be opended for reading.\n";
+	}
+
+	T value;
+
+	while (read_file >> value)
+	{
+		add(value);
+	}
+
+	read_file.close();
+}
+
+
+template<typename T>
+std::ostream& operator<<(std::ostream& ostr, const DyArray<T>& m)
 {
 	for (int i = 0; i < m.get_size(); i++)
 	{
