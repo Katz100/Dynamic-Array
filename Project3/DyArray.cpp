@@ -42,7 +42,7 @@ DyArray<T>::~DyArray()
 
 
 template<typename T>
-constexpr void DyArray<T>::add(T value)
+void DyArray<T>::add(T value)
 {
 	if (size >= max_size)
 	{
@@ -190,6 +190,15 @@ void DyArray<T>::read(const char* file_name)
 	}
 
 	read_file.close();
+}
+
+template<typename T>
+void DyArray<T>::swap(int a, int b)
+{
+	assert(isOutOfBounds(a) && isOutOfBounds(b) && "Index out of bounds");
+	T temp = array[a];
+	array[a] = array[b];
+	array[b] = temp;
 }
 
 

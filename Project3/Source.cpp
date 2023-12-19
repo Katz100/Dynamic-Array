@@ -3,10 +3,10 @@
 int main()
 {
 
-	DyArray<int> s;
+    DyArray<int> s;
 	s.read("sample.txt");
 	std::cout << s << std::endl;
-	s.remove(5);
+	s.swap(0, s.get_size() - 1);
 	std::cout << s;
 	
 

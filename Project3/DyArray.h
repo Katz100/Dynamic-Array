@@ -30,13 +30,14 @@ public:
 	T& operator[](int index);
 	const T& operator[](int index) const;
 
-	constexpr void add(T value);
-	 void remove(int index);
+	void add(T value);
+	void remove(int index);
 	void unitTest();
-	
-	bool isOutOfBounds(int index) const;
 	void write(const char* file_name);
 	void read(const char* file_name);
+	void swap(int a, int b);
+
+	bool isOutOfBounds(int index) const;
 
 };
 
