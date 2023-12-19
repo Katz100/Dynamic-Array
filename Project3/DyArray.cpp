@@ -17,7 +17,7 @@ DyArray<T>::DyArray() : size(0), max_size(2), array(new T [max_size])
 template<typename T>
 DyArray<T>::DyArray(const DyArray& other)
 {
-	delete[] array;
+	
 	size = other.size;
 	max_size = other.max_size;
 
@@ -27,7 +27,7 @@ DyArray<T>::DyArray(const DyArray& other)
 	{
 		temp_array[i] = other.array[i];
 	}
-
+	delete[] array;
 	array = temp_array;
 }
 
@@ -67,20 +67,20 @@ void DyArray<T>::add(T value)
 template<typename T>
  void DyArray<T>::remove(int index)
 {
-	assert(isOutOfBounds(index) && "index out of bounds");
+	 assert(isOutOfBounds(index) && "Index out of bounds");
+	T* temp_array = new T[max_size];
 	
-	T* temp_array = new T[size];
-	//case 0 = 0
-	if (size != 0)
+	
+	for (int i = 0; i < size; i++)
 	{
-		for (int i = 0; i < index; i++)
+		if (i < index)
 		{
 			temp_array[i] = array[i];
 		}
-	}
-	for (int i = index + 1; i < size; i++)
-	{
-		temp_array[i - 1] = array[i];
+		else if (i > index)
+		{
+			temp_array[i - 1] = array[i];
+		}
 	}
 	
 	delete[] array;
