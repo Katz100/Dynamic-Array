@@ -70,11 +70,14 @@ template<typename T>
 	assert(isOutOfBounds(index) && "index out of bounds");
 	
 	T* temp_array = new T[size];
-	for (int i = 0; i < index; i++)
+	//case 0 = 0
+	if (size != 0)
 	{
-		temp_array[i] = array[i];
+		for (int i = 0; i < index; i++)
+		{
+			temp_array[i] = array[i];
+		}
 	}
-
 	for (int i = index + 1; i < size; i++)
 	{
 		temp_array[i - 1] = array[i];
