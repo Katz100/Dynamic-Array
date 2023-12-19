@@ -36,8 +36,11 @@ public:
 	void write(const char* file_name);
 	void read(const char* file_name);
 	void swap(int a, int b);
+	void remove_last();
+	void clear();
 
 	bool isOutOfBounds(int index) const;
+	bool isEmpty() const;
 
 };
 

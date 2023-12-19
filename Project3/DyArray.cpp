@@ -69,7 +69,7 @@ template<typename T>
 {
 	assert(isOutOfBounds(index) && "index out of bounds");
 	
-	T* temp_array = new T[max_size];
+	T* temp_array = new T[size];
 	for (int i = 0; i < index; i++)
 	{
 		temp_array[i] = array[i];
@@ -154,6 +154,12 @@ bool DyArray<T>::isOutOfBounds(int index) const
 }
 
 template<typename T>
+bool DyArray<T>::isEmpty() const
+{
+	return (size == 0);
+}
+
+template<typename T>
 void DyArray<T>::write(const char* file_name)
 {
 	
@@ -199,6 +205,23 @@ void DyArray<T>::swap(int a, int b)
 	T temp = array[a];
 	array[a] = array[b];
 	array[b] = temp;
+}
+
+template<typename T>
+void DyArray<T>::remove_last()
+{
+	assert((size > 0) && "Array is empty");
+	remove(get_size() - 1);
+}
+
+template<typename T>
+void DyArray<T>::clear()
+{
+	int n = get_size();
+	for (int i = 0; i < n; i++)
+	{
+		remove(0);
+	}
 }
 
 
