@@ -1,18 +1,12 @@
 #include "DyArray.h"
 
-using Dynamic::DyArray;
+
 
 int main()
 {
 	
-    DyArray<int> s;
-	for (int i = 0; i < 10000; i++)
-	{
-		s.add(i);
-	}
-	
-	s.clear();
-	
+    Dynamic::DyArray<int> s;
+	s.unitTest();
 	
 	return 0;
 }
