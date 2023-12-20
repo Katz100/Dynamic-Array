@@ -4,6 +4,7 @@
 #ifndef DYARRAY_CPP
 #define DYARRAY_CPP
 
+
 template<typename T>
 DyArray<T>::DyArray(int size) : size(size), max_size(size * 2), array(new T [max_size])
 {
@@ -67,20 +68,18 @@ void DyArray<T>::add(T value)
 template<typename T>
  void DyArray<T>::remove(int index)
 {
-	 assert(isOutOfBounds(index) && "Index out of bounds");
+	assert(isOutOfBounds(index) && "Index out of bounds");
 	T* temp_array = new T[max_size];
 	
 	
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < index; i++)
 	{
-		if (i < index)
-		{
-			temp_array[i] = array[i];
-		}
-		else if (i > index)
-		{
-			temp_array[i - 1] = array[i];
-		}
+		temp_array[i] = array[i];
+	}
+
+	for (int i = index + 1; i < size; i++)
+	{
+		temp_array[i - 1] = array[i];
 	}
 	
 	delete[] array;
@@ -141,8 +140,13 @@ void DyArray<T>::unitTest()
 	
 	DyArray<int> newTestArray = TestArray;
 
-	assert(newTestArray[0] == 2 && newTestArray[1] == 3 && TestArray[2] == 5 && "Copy constructer failure");
+	assert(newTestArray[0] == 5 && newTestArray[1] == 3 && TestArray[2] == 2 && "Copy constructer failure");
 	std::cout << "Copy constructer succesful" << std::endl;
+
+	newTestArray.clear();
+
+	assert(newTestArray.isEmpty() && "Clear() method failure");
+	std::cout << "Clear() method succesful" << std::endl;
 }
 
 
@@ -220,9 +224,11 @@ void DyArray<T>::remove_last()
 template<typename T>
 void DyArray<T>::clear()
 {
+	//Get size of array before looping
 	int n = get_size();
 	for (int i = 0; i < n; i++)
 	{
+		//Removes first element and shifts following elements to the left by one.
 		remove(0);
 	}
 }
