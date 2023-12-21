@@ -13,10 +13,10 @@ namespace Dynamic {
 	{
 	private:
 
+
 		int size;
 		int max_size;
 		T* array;
-
 	public:
 
 
@@ -63,13 +63,10 @@ namespace Dynamic {
 		max_size = other.max_size;
 
 		T* temp_array = new T[max_size];
-		
-		if (size != 0)
+
+		for (int i = 0; i < size; i++)
 		{
-			for (int i = 0; i < size; i++)
-			{
-				temp_array[i] = other.array[i];
-			}
+			temp_array[i] = other.array[i];
 		}
 		delete[] array;
 		array = temp_array;
@@ -114,12 +111,10 @@ namespace Dynamic {
 		assert(isOutOfBounds(index) && "Index out of bounds");
 		T* temp_array = new T[max_size];
 
-		if (size != 0)
+
+		for (int i = 0; i < index; i++)
 		{
-			for (int i = 0; i < index; i++)
-			{
-				temp_array[i] = array[i];
-			}
+			temp_array[i] = array[i];
 		}
 
 		for (int i = index + 1; i < size; i++)
@@ -197,7 +192,7 @@ namespace Dynamic {
 
 
 
-	//returns 1 if index is valid, else returns 0
+
 	template<typename T>
 	bool DyArray<T>::isOutOfBounds(int index) const
 	{
@@ -224,7 +219,7 @@ namespace Dynamic {
 
 		for (int i = 0; i < size; i++)
 		{
-			write_file << array[i] << "\n";
+			write_file << array[i] << ' ';
 		}
 
 		write_file.close();
@@ -240,7 +235,7 @@ namespace Dynamic {
 			std::cerr << file_name << " could not be opended for reading.\n";
 		}
 
-		T value{};
+		T value;
 
 		while (read_file >> value)
 		{
